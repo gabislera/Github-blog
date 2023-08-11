@@ -42,6 +42,7 @@ export const PostsSection = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
+  margin-bottom: 10rem;
 
 `
 

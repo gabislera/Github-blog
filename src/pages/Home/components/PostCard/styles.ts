@@ -10,19 +10,22 @@ export const PostContainer = styled.div`
   div {
     display: flex;
     justify-content: space-between;
+    align-items: start;
     margin-bottom: 0.75rem;
 
     strong {
       font-size: 1.25rem;
       font-weight: 700;
-      line-height: 160%;
+      line-height: normal;
 
       max-width: 17.68rem;
     }
 
     span {
-      font-size: 0.875rem;
+      margin-top: 0.4rem;
+      font-size: 0.75rem;
       max-height: 112px;
+      line-height: normal;
     }
   }
 
