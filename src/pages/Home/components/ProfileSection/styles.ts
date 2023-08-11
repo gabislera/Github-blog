@@ -19,6 +19,7 @@ export const ProfileSection = styled.div`
   display: flex; 
   flex-direction: column; 
   justify-content: center;
+  width: 100%;
 
   p {
     margin-bottom: 1.5rem;
@@ -53,6 +54,7 @@ export const UserName = styled.div`
     a {
       color: ${({ theme }) => theme.colors['blue']};
       font-size: 0.75rem;
+      line-height: 0;
     }
   }
 `

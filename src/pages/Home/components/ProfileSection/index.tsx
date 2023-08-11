@@ -1,35 +1,86 @@
 import { FaGithub, FaBuilding, FaUser } from "react-icons/fa";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { ProfileContainer, ProfileSection, UserName, ProfileInfo } from "./styles";
+import { useState, useEffect } from "react";
+import { api } from "../../../../services/api";
+
+interface UserProps {
+  avatar_url: string
+  name: string
+  bio: string
+  followers: number
+  login: string
+  company: string | null
+  html_url: string
+}
+
+const initialUser = {
+  avatar_url: '',
+  name: '',
+  bio: '',
+  followers: 0,
+  login: '',
+  company: '',
+  html_url: ''
+}
 
 export function Profile() {
+  const [user, setUser] = useState<UserProps>(initialUser)
+  const userName = 'gabislera'
+
+  useEffect(() => {
+    async function fetchUser() {
+      const response = await api.get(`/users/${userName}`)
+
+      const { avatar_url, name, bio, followers, login, company, html_url } = response.data
+
+      const user = {
+        avatar_url,
+        name,
+        bio,
+        followers,
+        login,
+        company,
+        html_url
+      }
+
+      setUser(user)
+    }
+    fetchUser()
+    // console.log('teste')
+  }, [])
+
+  useEffect(() => {
+    console.log(user)
+  }, [user.name])
+
   return (
     <ProfileContainer>
-      <img src="https://github.com/gabislera.png" alt="" />
+      <img src={user.avatar_url} alt="" />
 
       <ProfileSection>
         <UserName>
-          <strong>Cameron Williamson</strong>
+          <strong>{user.name}</strong>
           <div>
-            <a href="">GITHUB</a>
+            <a href={user.html_url}>GITHUB</a>
             <FaArrowUpRightFromSquare />
           </div>
         </UserName>
 
-        <p>Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu viverra massa quam dignissim aenean malesuada suscipit. Nunc, volutpat pulvinar vel mass.</p>
+        <p>{user.bio}</p>
 
         <ProfileInfo>
           <div>
             <FaGithub />
-            <span>cameronwll</span>
+            <span>{user.login}</span>
           </div>
           <div>
             <FaBuilding />
-            <span>Rocketseat</span>
+            <span>{user.company ? user.company : 'no company'}</span>
           </div>
           <div>
             <FaUser />
-            <span>32 seguidores</span>
+            <span>{user.followers} seguidores</span>
           </div>
         </ProfileInfo>
       </ProfileSection>

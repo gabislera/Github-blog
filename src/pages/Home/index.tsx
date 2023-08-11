@@ -1,7 +1,6 @@
 import { HomeContainer, SearchForm, PostsSection } from "./styles";
 import { PostCard } from "./components/PostCard";
 import { Profile } from "./components/ProfileSection";
-
 export function Home() {
   return (
     <HomeContainer>
