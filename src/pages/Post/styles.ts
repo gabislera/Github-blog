@@ -9,6 +9,16 @@ export const PostContainer = styled.div`
 export const PostContent = styled.div`
   padding: 2.5rem;
 
+  .react-markdown {
+    white-space: pre-wrap;
+    line-height: 1.6;
+    hyphens: "auto",
+  }
+  
+  a {
+  color: ${({ theme }) => theme.colors['blue']};
+
+  }
 `
 
 export const CodeContent = styled.div`

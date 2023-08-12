@@ -37,6 +37,7 @@ export function Home() {
   const [searchText, setSearchText] = useState('')
 
   const userName = 'gabislera'
+  const repoName = 'Github-blog' // may change to context in future
 
   useEffect(() => {
     async function fetchUser() {
@@ -61,7 +62,7 @@ export function Home() {
 
   useEffect(() => {
     async function fetchPosts() {
-      const response = await api.get(`/search/issues?q=${searchText}%20repo:${userName}/Github-blog`)
+      const response = await api.get(`/search/issues?q=${searchText}%20repo:${userName}/${repoName}`)
       console.log(response.data.items)
       setPosts(response.data.items)
     }
@@ -88,7 +89,6 @@ export function Home() {
 
       <PostsSection>
         {posts.map(item => <PostCard key={item.number} data={item} />)}
-
 
       </PostsSection>
     </HomeContainer>

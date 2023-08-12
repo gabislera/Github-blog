@@ -12,16 +12,16 @@ export const GlobalStyle = createGlobalStyle`
     box-shadow: 0 0 0 2px ${({ theme }) => theme.colors['blue']};
   }
 
-  body {
+  body, button {
     background-color: ${({ theme }) => theme.colors['base-background']};
     color: ${({ theme }) => theme.colors['base-text']};
-
     -webkit-font-smoothing: antialiased
   }
 
-  body, input {
+  body, input, button {
     font-family: 'Nunito', sans-serif;
     line-height: 160%;
+    font-size: 1rem;
   }
 
   a {

@@ -1,10 +1,23 @@
-import { FaChevronLeft, FaGithub, FaBuilding, FaUser } from "react-icons/fa";
+import { FaChevronLeft, FaGithub, FaCalendarDay, FaComment } from "react-icons/fa";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { PostHeaderContainer, NavigationLinks, PostInfo } from "./styles";
 import { NavLink } from 'react-router-dom'
+import { CompletePost } from '../../index'
+import { formatDistanceToNow } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
 
+interface PostHeaderProps {
+  data: CompletePost
+}
 
-export function PostHeader() {
+export function PostHeader({ data }: PostHeaderProps) {
+  const date = new Date(data.created_at)
+
+  const publishedDateRelativeToNow = formatDistanceToNow(date, {
+    locale: ptBR,
+    addSuffix: true
+  })
+
   return (
     <PostHeaderContainer>
       <NavigationLinks>
@@ -13,25 +26,25 @@ export function PostHeader() {
           <NavLink to='/'>VOLTAR</NavLink>
         </div>
         <div>
-          <a href="">VER NO GITHUB</a>
+          <a href={data.html_url}>VER NO GITHUB</a>
           <FaArrowUpRightFromSquare />
         </div>
       </NavigationLinks>
 
-      <strong>JavaScript data types and data structures</strong>
+      <strong>{data.title}</strong>
 
       <PostInfo>
         <div>
           <FaGithub />
-          <span>cameronwll</span>
+          <span>{data.user.login}</span>
         </div>
         <div>
-          <FaBuilding />
-          <span>Rocketseat</span>
+          <FaCalendarDay />
+          <span>{publishedDateRelativeToNow}</span>
         </div>
         <div>
-          <FaUser />
-          <span>32 seguidores</span>
+          <FaComment />
+          <span>{data.comments} comentarios</span>
         </div>
       </PostInfo>
     </PostHeaderContainer>

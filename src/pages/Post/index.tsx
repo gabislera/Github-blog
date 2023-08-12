@@ -1,24 +1,68 @@
+import { useParams } from "react-router-dom";
 import { PostHeader } from "./components/PostHeader";
 import { CodeContent, PostContainer, PostContent } from "./styles";
+import { useEffect, useState } from "react";
+import { api } from "../../services/api";
+import { UserProps, PostProps } from '../Home'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+
+export interface CompletePost extends PostProps {
+  user: UserProps
+  comments: number
+  html_url: string
+}
+
+const initialPost = {
+  number: 0,
+  title: '',
+  body: '',
+  created_at: new Date(),
+  user: {
+    avatar_url: '',
+    name: '',
+    bio: '',
+    followers: 0,
+    login: '',
+    company: '',
+    html_url: ''
+  },
+  comments: 0,
+  html_url: ''
+}
 
 export function Post() {
+  const [post, setPost] = useState<CompletePost>(initialPost)
+  const { id } = useParams()
+
+  const userName = 'gabislera'
+  const repoName = 'Github-blog' // may change to context in future
+
+  useEffect(() => {
+    async function fetchPost() {
+      const response = await api.get(`/repos/${userName}/${repoName}/issues/${id}`)
+      setPost(response.data)
+      console.log(response.data)
+    }
+    fetchPost()
+  }, [])
+
   return (
     <PostContainer>
-      <PostHeader />
+      <PostHeader data={post} />
 
       <PostContent>
-        <p>
-          Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn.
-        </p>
 
-        <p>
-          <a href="">Dynamic typing</a> <br />
-          JavaScript is a loosely typed and dynamic language. Variables in JavaScript are not directly associated with any particular value type, and any variable can be assigned (and re-assigned) values of all types:
-        </p>
+        <ReactMarkdown className="react-markdown" remarkPlugins={[remarkGfm]}>
+          {post.body}
+
+        </ReactMarkdown>
 
         <CodeContent>
 
         </CodeContent>
+
+
       </PostContent>
     </PostContainer>
   )
