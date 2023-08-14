@@ -4,13 +4,11 @@ export const PostContainer = styled.button`
   background: ${({ theme }) => theme.colors['base-post']};
   border: none;
   border-radius: 10px;
-  max-width: 26rem;
-  max-height: 16.25rem;
   padding: 2rem;
   display: flex;
   flex-direction: column;
   text-align: start;
-
+  
   div {
     display: flex;
     width: 100%;
@@ -22,7 +20,7 @@ export const PostContainer = styled.button`
       font-size: 1.25rem;
       font-weight: 700;
       line-height: normal;
-      /* max-width: 17.68rem; */
+      max-width: 300px;
     }
 
     span {

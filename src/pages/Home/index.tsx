@@ -1,4 +1,4 @@
-import { HomeContainer, SearchForm, PostsSection } from "./styles";
+import { HomeContainer, SearchForm, PostsSection, ErrorSection } from "./styles";
 import { PostCard } from "./components/PostCard";
 import { Profile } from "./components/ProfileSection";
 import { useEffect, useState } from "react";
@@ -62,9 +62,12 @@ export function Home() {
 
   useEffect(() => {
     async function fetchPosts() {
-      const response = await api.get(`/search/issues?q=${searchText}%20repo:${userName}/${repoName}`)
-      console.log(response.data.items)
-      setPosts(response.data.items)
+      try {
+        const response = await api.get(`/search/issues?q=${searchText}%20repo:${userName}/${repoName}`)
+        setPosts(response.data.items)
+      } catch (err) {
+        setPosts(null)
+      }
     }
     fetchPosts()
   }, [searchText])
@@ -74,10 +77,9 @@ export function Home() {
       <Profile user={user} />
 
       <SearchForm>
-
         <div>
           <strong>Publicações</strong>
-          <span>{posts.length} publicações</span>
+          <span>{posts ? posts.length : '0'} publicações</span>
         </div>
 
         <input
@@ -87,10 +89,16 @@ export function Home() {
           onChange={(e) => setSearchText(e.target.value)} />
       </SearchForm>
 
-      <PostsSection>
-        {posts.map(item => <PostCard key={item.number} data={item} />)}
 
-      </PostsSection>
+      {posts ? (
+        <PostsSection>
+          {posts.map(item => <PostCard key={item.number} data={item} />)}
+        </PostsSection>
+      ) : (
+        <ErrorSection>
+          <span>Ocorreu algum erro, aguarde alguns instantes e recarregue a página</span>
+        </ErrorSection>
+      )}
     </HomeContainer>
 
   )

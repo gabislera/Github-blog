@@ -2,8 +2,10 @@ import { styled } from "styled-components";
 
 export const HeaderContainer = styled.header`
   height: 18.5rem;
-  width: 100vw;
+  /* width: 100vw; */
   background: ${({ theme }) => theme.colors['base-profile']};
+  background-image: url(/src/assets/headerGradient.svg);
+  background-size: cover;
   position: relative;
   display: flex;
   justify-content: center;

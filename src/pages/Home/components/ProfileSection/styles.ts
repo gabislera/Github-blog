@@ -3,11 +3,12 @@ import { styled } from "styled-components"
 export const ProfileContainer = styled.div`
   display: flex;
   width: 100%;
-  background: ${({ theme }) => theme.colors['base-post']};
+  background: ${({ theme }) => theme.colors['base-profile']};
   padding: 2rem 2.5rem;
   border-radius: 10px;
   gap: 2rem;
-  transform: translateY(-4.375rem);
+  transform: translateY(-4.375rem); // isolation: isolate 
+  box-shadow: 0 1px 25px rgba(0, 0, 0, 0.8);
 
   img {
     max-width: 9.25rem;
